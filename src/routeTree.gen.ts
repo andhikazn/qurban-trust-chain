@@ -9,8 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as HewanRouteImport } from './routes/hewan'
+import { Route as DistribusiRouteImport } from './routes/distribusi'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as DaftarRouteImport } from './routes/daftar'
 import { Route as IndexRouteImport } from './routes/index'
 
+const HewanRoute = HewanRouteImport.update({
+  id: '/hewan',
+  path: '/hewan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DistribusiRoute = DistribusiRouteImport.update({
+  id: '/distribusi',
+  path: '/distribusi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DaftarRoute = DaftarRouteImport.update({
+  id: '/daftar',
+  path: '/daftar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +43,72 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/daftar': typeof DaftarRoute
+  '/dashboard': typeof DashboardRoute
+  '/distribusi': typeof DistribusiRoute
+  '/hewan': typeof HewanRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/daftar': typeof DaftarRoute
+  '/dashboard': typeof DashboardRoute
+  '/distribusi': typeof DistribusiRoute
+  '/hewan': typeof HewanRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/daftar': typeof DaftarRoute
+  '/dashboard': typeof DashboardRoute
+  '/distribusi': typeof DistribusiRoute
+  '/hewan': typeof HewanRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/daftar' | '/dashboard' | '/distribusi' | '/hewan'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/daftar' | '/dashboard' | '/distribusi' | '/hewan'
+  id: '__root__' | '/' | '/daftar' | '/dashboard' | '/distribusi' | '/hewan'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DaftarRoute: typeof DaftarRoute
+  DashboardRoute: typeof DashboardRoute
+  DistribusiRoute: typeof DistribusiRoute
+  HewanRoute: typeof HewanRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/hewan': {
+      id: '/hewan'
+      path: '/hewan'
+      fullPath: '/hewan'
+      preLoaderRoute: typeof HewanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/distribusi': {
+      id: '/distribusi'
+      path: '/distribusi'
+      fullPath: '/distribusi'
+      preLoaderRoute: typeof DistribusiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/daftar': {
+      id: '/daftar'
+      path: '/daftar'
+      fullPath: '/daftar'
+      preLoaderRoute: typeof DaftarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,16 +121,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DaftarRoute: DaftarRoute,
+  DashboardRoute: DashboardRoute,
+  DistribusiRoute: DistribusiRoute,
+  HewanRoute: HewanRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
