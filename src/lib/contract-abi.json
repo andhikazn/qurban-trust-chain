@@ -1,0 +1,7 @@
+{
+  "address": "0x0000000000000000000000000000000000000000",
+  "abi": [],
+  "network": "ganache",
+  "chainId": 1337,
+  "_note": "File ini di-overwrite otomatis saat menjalankan `npm run deploy:ganache` di folder /blockchain."
+}
